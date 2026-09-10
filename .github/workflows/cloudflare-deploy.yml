@@ -1,4 +1,4 @@
-name: Deploy Cloudflare
+name: Build and Deploy
 
 on:
   workflow_dispatch:
@@ -24,16 +24,16 @@ jobs:
           node-version: 24
           cache: pnpm
 
-      - name: Install
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build
+      - name: Build Cloudflare
         run: pnpm run build:cloudflare
 
       - name: Install Wrangler
         run: pnpm add -g wrangler@4.60.0
 
-      - name: Deploy Worker
+      - name: Deploy Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
